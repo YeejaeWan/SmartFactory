@@ -1,29 +1,29 @@
 package com.example.smartfactory.network.DTO;
 
 public class SensorValue {
-    String sensorName;
-    String sensorValue;
+    String name;
+    String value;
 
-    public String getSensorName() {
-        return sensorName;
+    public String getName() {
+        return name;
     }
 
-    public void setSensorName(String sensorName) {
-        this.sensorName = sensorName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getSensorValue() {
-        return sensorValue;
+    public String getValue() {
+        return value;
     }
 
-    public void setSensorValue(String sensorValue) {
-        this.sensorValue = sensorValue;
+    public void setValue(String value) {
+        this.value = value;
     }
 
 
 
-    public SensorValue(String sensorName, String sensorValue) {
-        this.sensorName = sensorName;
-        this.sensorValue = sensorValue;
+    public SensorValue(String name, String value) {
+        this.name = name;
+        this.value = value;
     }
 }

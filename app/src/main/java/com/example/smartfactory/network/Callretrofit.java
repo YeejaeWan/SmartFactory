@@ -1,6 +1,8 @@
 package com.example.smartfactory.network;
 
 
+import android.util.Log;
+
 import com.example.smartfactory.network.DTO.AlarmDTO;
 import com.example.smartfactory.network.DTO.SensorValue;
 import com.example.smartfactory.network.VO.FollowshipVO;
@@ -8,6 +10,7 @@ import com.example.smartfactory.network.VO.LoginVO;
 import com.example.smartfactory.network.VO.SignUpVO;
 
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.http.Body;
 import retrofit2.http.Path;
@@ -29,8 +32,12 @@ public class Callretrofit {
         RetrofitAPI service= retrofit.create(RetrofitAPI.class);
         Call<String> call = service.post_login_request(new LoginVO(ID,PW,Env.CLIENT));
         String response = null;
+        Log.d("Callretrofit","Callretrofit.post_login_request");
+        System.out.println("");;
         try {
+            Log.d("Callretrofit","Callretrofit.post_login_request");
             response= call.execute().body();
+            Log.d("Callretrofit","Callretrofit.post_login_request");
 
         }catch (IOException e){
             e.printStackTrace();
@@ -56,8 +63,7 @@ public class Callretrofit {
         Call<SensorValue[]> call = service.get_sensor_value_resent_one(userId);
         SensorValue[] response = null;
         try {
-            response= call.execute().body();
-
+            response=call.execute().body();
         }catch (IOException e){
             e.printStackTrace();
         }

@@ -66,47 +66,49 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
+
         /* initiate adapter */
         mRecyclerAdapter = new MyRecyclerAdapter();
 
         /* initiate recyclerview */
         mRecyclerView.setAdapter(mRecyclerAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL,false));
-
-        Thread thread= new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                while (true){
-                    try {
-                        sleep(7000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    SensorValue[] sensorValues = Callretrofit.get_sensor_value_resent_one(userId);
-                    mItems=new ArrayList<>();
-                    for(int i = 0; i< sensorValues.length; i++){
-                        mItems.add(new Item(sensorValues[i].getSensorName(), sensorValues[i].getSensorValue()));
-                    }
-                    mRecyclerAdapter.notifyDataSetChanged();
-
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//
-//                        }
-//                    });
-                }
-
-            }
-        };
         /* adapt data */
         mItems = new ArrayList<>();
         for(int i=1;i<=10;i++){
             mItems.add(new Item("상태"+i,"상태메시지"));
         }
         mRecyclerAdapter.setFriendList(mItems);
+        Thread thread= new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                while (true){
+                    try {
+                        sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    SensorValue[] sensorValues = Callretrofit.get_sensor_value_resent_one(userId);
+                    mItems=new ArrayList<>();
+                    for (int i = 0; i <sensorValues.length ; i++) {
+                        mItems.add(new Item(sensorValues[i].getName(),sensorValues[i].getValue()));
+                        System.out.println(sensorValues[i].getName()+" : "+sensorValues[i].getValue());
+                    }
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mRecyclerAdapter.setFriendList(mItems);
+                            mRecyclerAdapter.notifyDataSetChanged();
+
+                        }
+                    });
+                }
+            }
+        };
+
+        thread.start();
     }
 
     //DrawerLayout 명령어들

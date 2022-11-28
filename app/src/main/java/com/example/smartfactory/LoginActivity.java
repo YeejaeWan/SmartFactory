@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.example.smartfactory.network.Callretrofit;
 
 public class LoginActivity extends AppCompatActivity {
-    class Thread_temp extends Thread{
+    static class Thread_temp extends Thread{
         public String response;
         public String id;
         public String pw;
@@ -37,9 +37,10 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Thread_temp t=new Thread_temp();
+                Thread_temp t= new Thread_temp();
                 t.id=editTextID.getText().toString();
                 t.pw=editTextPw.getText().toString();
+                t.start();
                 try {
                     t.join();
                 } catch (InterruptedException e) {
