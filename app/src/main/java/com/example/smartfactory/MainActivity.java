@@ -6,15 +6,15 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.Button;
 
+import com.example.smartfactory.network.Callretrofit;
+import com.example.smartfactory.network.DTO.SensorValue;
+
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -23,11 +23,13 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Item> mItems;
     private DrawerLayout drawerLayout;
     private View drawerView;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        userId=getIntent().getStringExtra("user_id");
 
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         drawerView =(View)findViewById(R.id.drawer);
@@ -72,13 +74,37 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL,false));
 
+        Thread thread= new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                while (true){
+                    try {
+                        sleep(7000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    SensorValue[] sensorValues = Callretrofit.get_sensor_value_resent_one(userId);
+                    mItems=new ArrayList<>();
+                    for(int i = 0; i< sensorValues.length; i++){
+                        mItems.add(new Item(sensorValues[i].getSensorName(), sensorValues[i].getSensorValue()));
+                    }
+                    mRecyclerAdapter.notifyDataSetChanged();
+
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//
+//                        }
+//                    });
+                }
+
+            }
+        };
         /* adapt data */
         mItems = new ArrayList<>();
         for(int i=1;i<=10;i++){
-
             mItems.add(new Item("상태"+i,"상태메시지"));
-
-
         }
         mRecyclerAdapter.setFriendList(mItems);
     }

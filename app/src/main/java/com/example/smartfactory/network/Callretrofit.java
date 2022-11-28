@@ -1,7 +1,11 @@
 package com.example.smartfactory.network;
 
 
-import com.example.smartfactory.network.DTO.SensorValueDTO;
+import com.example.smartfactory.network.DTO.AlarmDTO;
+import com.example.smartfactory.network.DTO.SensorValue;
+import com.example.smartfactory.network.VO.FollowshipVO;
+import com.example.smartfactory.network.VO.LoginVO;
+import com.example.smartfactory.network.VO.SignUpVO;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -23,7 +27,7 @@ public class Callretrofit {
     public static String post_login_request(String ID, String PW) {
         Retrofit retrofit = RetrofitClient.getInstance();
         RetrofitAPI service= retrofit.create(RetrofitAPI.class);
-        Call<String> call = service.post_login_request(ID,PW);
+        Call<String> call = service.post_login_request(new LoginVO(ID,PW,Env.CLIENT));
         String response = null;
         try {
             response= call.execute().body();
@@ -36,7 +40,7 @@ public class Callretrofit {
     public static String post_signUp_request(String ID,String PW) {
         Retrofit retrofit = RetrofitClient.getInstance();
         RetrofitAPI service= retrofit.create(RetrofitAPI.class);
-        Call<String> call = service.post_signUp_request(ID,PW);
+        Call<String> call = service.post_signUp_request(new SignUpVO(ID,PW));
         String response = null;
         try {
             response= call.execute().body();
@@ -46,39 +50,51 @@ public class Callretrofit {
         }
         return response;
     }
-    public SensorValueDTO[] get_sensor_value_resent_one(){
-        SensorValueDTO[] sensorValueDTOS = new SensorValueDTO[0];
-        return sensorValueDTOS;
+    public static SensorValue[] get_sensor_value_resent_one(String userId){
+        Retrofit retrofit = RetrofitClient.getInstance();
+        RetrofitAPI service= retrofit.create(RetrofitAPI.class);
+        Call<SensorValue[]> call = service.get_sensor_value_resent_one(userId);
+        SensorValue[] response = null;
+        try {
+            response= call.execute().body();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return response;
     }
-    public SensorValueDTO[][] get_sensor_values_period(@Path("ID") String id, @Body String token){
-        SensorValueDTO[][] sensorValueDTOS = new SensorValueDTO[0][];
-        return sensorValueDTOS;
+    public static SensorValue[][] get_sensor_values_period( String id){
+        SensorValue[][] sensorValues = new SensorValue[0][];
+        return sensorValues;
     }
-    public SensorValueDTO[][] get_sensor_value_all(){
-        SensorValueDTO[][] sensorValueDTOS = new SensorValueDTO[0][];
-        return sensorValueDTOS;
+    public static SensorValue[][] get_sensor_value_all(){
+        SensorValue[][] sensorValues = new SensorValue[0][];
+        return sensorValues;
     }
 
-    public String post_follower(@Body String myID, @Body String targetID){
+    public static String post_follower(FollowshipVO followshipVO){
         return "";
     }
-    public String get_follower(@Body String myID){
+    public static String get_follow(String myID){
         return "";
     }
-    public String patch_follower(@Body Long followerShipIndex, @Body boolean enable){
+    public static String get_follower(String myID){
+        return "";
+    }
+    public static String patch_follower(Long followerShipIndex,  boolean enable){
         return "";
     }
 
-    public String post_alarm(@Body String myID,@Body Long sensorIndex,  @Body double from, @Body double to){
+    public static String post_alarm(AlarmDTO alarmDTO){
         return "";
     }
-    public String get_alarm(@Body String myID){
+    public static String get_alarm(String myID){
         return "";
     }
-    public String patch_alarm(@Body Long alarmIndex, @Body double from, @Body double to){
+    public static String patch_alarm(Long alarmIndex, double from, double to){
         return "";
     }
-    public String delete_alarm(@Body Long alarmIndex){
+    public static String delete_alarm(Long alarmIndex){
         return "";
     }
 }
