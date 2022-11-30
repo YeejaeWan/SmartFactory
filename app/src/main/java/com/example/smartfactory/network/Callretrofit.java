@@ -27,10 +27,10 @@ class Env{
 }
 public class Callretrofit {
 
-    public static String post_login_request(String ID, String PW) {
+    public static String post_login_request(String userId, String pw) {
         Retrofit retrofit = RetrofitClient.getInstance();
         RetrofitAPI service= retrofit.create(RetrofitAPI.class);
-        Call<String> call = service.post_login_request(new LoginVO(ID,PW,Env.CLIENT));
+        Call<String> call = service.post_login_request(new LoginVO(userId,pw,Env.CLIENT));
         String response = null;
         Log.d("Callretrofit","Callretrofit.post_login_request");
         System.out.println("");;
@@ -44,10 +44,10 @@ public class Callretrofit {
         }
         return response;
     }
-    public static String post_signUp_request(String ID,String PW) {
+    public static String post_signUp_request(String userId,String pw) {
         Retrofit retrofit = RetrofitClient.getInstance();
         RetrofitAPI service= retrofit.create(RetrofitAPI.class);
-        Call<String> call = service.post_signUp_request(new SignUpVO(ID,PW));
+        Call<String> call = service.post_signUp_request(new SignUpVO(userId,pw));
         String response = null;
         try {
             response= call.execute().body();
@@ -69,13 +69,29 @@ public class Callretrofit {
         }
         return response;
     }
-    public static SensorValue[][] get_sensor_values_period( String id){
-        SensorValue[][] sensorValues = new SensorValue[0][];
-        return sensorValues;
+    public static SensorValue[][] get_sensor_values_period(String userId, String from, String to){
+        Retrofit retrofit = RetrofitClient.getInstance();
+        RetrofitAPI service= retrofit.create(RetrofitAPI.class);
+        Call<SensorValue[][]> call = service.get_sensor_values_period(userId,from,to);
+        SensorValue[][] response = null;
+        try {
+            response=call.execute().body();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return response;
     }
-    public static SensorValue[][] get_sensor_value_all(){
-        SensorValue[][] sensorValues = new SensorValue[0][];
-        return sensorValues;
+    public static SensorValue[][] get_sensor_value_all(String userId){
+        Retrofit retrofit = RetrofitClient.getInstance();
+        RetrofitAPI service= retrofit.create(RetrofitAPI.class);
+        Call<SensorValue[][]> call = service.get_sensor_value_all(userId);
+        SensorValue[][] response = null;
+        try {
+            response=call.execute().body();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return response;
     }
 
     public static String post_follower(FollowshipVO followshipVO){
@@ -102,5 +118,18 @@ public class Callretrofit {
     }
     public static String delete_alarm(Long alarmIndex){
         return "";
+    }
+
+    public static String post_push_token(String pushToken ,String userId){
+        Retrofit retrofit = RetrofitClient.getInstance();
+        RetrofitAPI service= retrofit.create(RetrofitAPI.class);
+        Call<String> call = service.postPushToken(pushToken,userId);
+        String response = null;
+        try {
+            response=call.execute().body();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return response;
     }
 }

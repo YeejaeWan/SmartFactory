@@ -2,19 +2,21 @@ package com.example.smartfactory;
 
 import android.util.Log;
 
+import com.example.smartfactory.network.Callretrofit;
 import com.google.firebase.iid.internal.FirebaseInstanceIdInternal;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class PushService extends FirebaseMessagingService {
     private static final String TAG ="push service.java" ;
-
     /* 토큰이 새로 만들어질때나 refresh 될때  */
     @Override
     public void onNewToken(String s) {
         super.onNewToken(s);
         Log.e("NEW_TOKEN", s);
-
+        if (!MainActivity.userId.equals("")) {
+            Callretrofit.post_push_token(s, MainActivity.userId);
+        }
         /* DB서버로 새토큰을 업데이트시킬수 있는 부분 */
     }
 

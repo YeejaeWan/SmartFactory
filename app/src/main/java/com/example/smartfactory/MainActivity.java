@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Item> mItems;
     private DrawerLayout drawerLayout;
     private View drawerView;
-    private String userId;
+    protected static String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

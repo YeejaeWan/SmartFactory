@@ -30,7 +30,6 @@ public interface RetrofitAPI {
 @PATCH ("alarm") Call<String> patch_alarm(@Body AlarmDTO alarmDTO);
 @DELETE ("alarm/{index}") Call<String> delete_alarm(@Path("index") Long alarmIndex);
 
-
-
+@POST("pushToken/{ID}") Call<String> postPushToken(@Body String pushToken, @Path("ID") String user_id);
 
 }
