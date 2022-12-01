@@ -1,4 +1,4 @@
-package com.example.smartfactory.Activity.PopUp;
+package com.example.smartfactory.Activity.mainActivity.PopUp;
 
 import androidx.annotation.NonNull;
 
@@ -10,8 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.smartfactory.Activity.MainActivity;
-import com.example.smartfactory.Item;
+import com.example.smartfactory.Activity.mainActivity.MainActivity;
+import com.example.smartfactory.Activity.mainActivity.SensorValueItem;
 import com.example.smartfactory.R;
 import com.example.smartfactory.network.Callretrofit;
 import com.example.smartfactory.network.DTO.AlarmDTO;
@@ -28,10 +28,10 @@ public class AlarmDialog extends Dialog implements View.OnClickListener{
     protected static List<AlarmDTO> alarmDTOS;
     public AlarmDTO alarm;
     public boolean hasAlarm=false;
-    private Item item;
+    private SensorValueItem sensorValueItem;
 
 
-    public AlarmDialog(@NonNull Context context, Item item) {
+    public AlarmDialog(@NonNull Context context, SensorValueItem sensorValueItem) {
         super(context);
         this.context = context;
         new Thread(){
@@ -41,7 +41,7 @@ public class AlarmDialog extends Dialog implements View.OnClickListener{
                 AlarmDialog.alarmDTOS=Callretrofit.get_alarm(MainActivity.userId);
                 if(!Objects.isNull(alarmDTOS)) {
                     for (int i = 0; i < alarmDTOS.size(); i++) {
-                        if (alarmDTOS.get(i).getSensorIndex() == item.getSensorIndex()) {
+                        if (alarmDTOS.get(i).getSensorIndex() == sensorValueItem.getSensorIndex()) {
                             alarm = alarmDTOS.get(i);
                             System.out.println("AlarmDialog.run: 생성자에서 찾은 내역 min = "+alarm.getMinimum()+" max = "+ alarm.getMaximum());
                         }
@@ -49,7 +49,7 @@ public class AlarmDialog extends Dialog implements View.OnClickListener{
                 }
             }
         }.start();
-        this.item=item;
+        this.sensorValueItem = sensorValueItem;
 
 
     }

@@ -1,4 +1,4 @@
-package com.example.smartfactory.Activity;
+package com.example.smartfactory.Activity.mainActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,8 +11,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.smartfactory.Item;
-import com.example.smartfactory.MyRecyclerAdapter;
 import com.example.smartfactory.R;
 import com.example.smartfactory.network.Callretrofit;
 import com.example.smartfactory.network.DTO.SensorValue;
@@ -23,8 +21,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
-    private MyRecyclerAdapter mRecyclerAdapter;
-    private ArrayList<Item> mItems;
+    private SensorValueRecyclerAdapter mRecyclerAdapter;
+    private ArrayList<SensorValueItem> mSensorValueItems;
     private DrawerLayout drawerLayout;
     private View drawerView;
     public static String userId;
@@ -61,14 +59,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                     Sensor[] sensors=Callretrofit.get_all_sensor(userId);
                     SensorValue[] sensorValues = Callretrofit.get_sensor_value_resent_one(userId);
-                    mItems=new ArrayList<>();
+                    mSensorValueItems =new ArrayList<>();
                     for (int i = 0; i < sensors.length; i++) {
                         for (int j = 0;  j<sensorValues.length ; j++) {
                             if(sensors[i].getName().equals(sensorValues[j].getName())) {
                                 long idx=sensors[i].getIndex();
                                 String n = sensorValues[j].getName();
                                 String v = sensorValues[j].getValue();
-                                mItems.add(new Item(idx, n, v));
+                                mSensorValueItems.add(new SensorValueItem(idx, n, v));
                             }
 
                         }
@@ -78,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            mRecyclerAdapter.setFriendList(mItems);
+                            mRecyclerAdapter.setFriendList(mSensorValueItems);
                             mRecyclerAdapter.notifyDataSetChanged();
 
                         }
@@ -92,17 +90,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void initmRecycler() {
         /* initiate adapter */
-        mRecyclerAdapter = new MyRecyclerAdapter();
+        mRecyclerAdapter = new SensorValueRecyclerAdapter();
 
         /* initiate recyclerview */
         mRecyclerView.setAdapter(mRecyclerAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL,false));
         /* adapt data */
-        mItems = new ArrayList<>();
+        mSensorValueItems = new ArrayList<>();
         for(int i=1;i<=10;i++){
-            mItems.add(new Item(i,"상태"+i,"상태메시지"));
+            mSensorValueItems.add(new SensorValueItem(i,"상태"+i,"상태메시지"));
         }
-        mRecyclerAdapter.setFriendList(mItems);
+        mRecyclerAdapter.setFriendList(mSensorValueItems);
     }
 
     private void initDrawer() {

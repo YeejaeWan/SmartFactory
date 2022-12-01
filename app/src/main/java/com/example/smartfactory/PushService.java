@@ -2,7 +2,7 @@ package com.example.smartfactory;
 
 import android.util.Log;
 
-import com.example.smartfactory.Activity.MainActivity;
+import com.example.smartfactory.Activity.mainActivity.MainActivity;
 import com.example.smartfactory.network.Callretrofit;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;

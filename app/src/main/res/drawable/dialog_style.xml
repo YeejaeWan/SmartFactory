@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
+    <sensorValueItem>
         <shape>
             <corners android:shape="rectangle"/>
             <solid android:color="#ffDDDDDD"/>
         </shape>
-    </item>
+    </sensorValueItem>
 </layer-list>

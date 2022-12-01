@@ -1,12 +1,12 @@
-package com.example.smartfactory;
+package com.example.smartfactory.Activity.mainActivity;
 
-public class Item {
+public class SensorValueItem {
     long sensorIndex;
     String name;
     String message;
     int resourceId;
 
-    public Item(long sensorIndex, String name, String message) {
+    public SensorValueItem(long sensorIndex, String name, String message) {
         this.sensorIndex=sensorIndex;
         this.name = name;
         this.message= message;
