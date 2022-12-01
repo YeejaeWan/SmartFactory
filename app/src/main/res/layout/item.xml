@@ -9,31 +9,43 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:padding="20dp">
+        android:padding="20dp"
+        android:weightSum="10">
 
         <!--프로필 사진-->
 
 
         <!--이름-->
+
         <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_margin="10dp"
+            android:layout_weight="2"
             android:text="상태1"
-            android:textSize="16sp"
-            android:textColor="#000"/>
+            android:textColor="#000"
+            android:textSize="16sp" />
 
         <!--상태 메시지-->
         <TextView
             android:id="@+id/message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="7"
+            android:maxLines="1"
             android:text="상태메시지"
-            android:textSize="20dp"
             android:textColor="#444"
-            android:maxLines="1"/>
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/addAlarmButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="알람추가" />
 
     </LinearLayout>
 

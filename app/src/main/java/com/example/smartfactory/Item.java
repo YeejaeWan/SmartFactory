@@ -1,17 +1,20 @@
 package com.example.smartfactory;
 
 public class Item {
+    long sensorIndex;
     String name;
     String message;
     int resourceId;
 
-    public Item( String name, String message) {
+    public Item(long sensorIndex, String name, String message) {
+        this.sensorIndex=sensorIndex;
         this.name = name;
         this.message= message;
-        this.resourceId = resourceId;
     }
 
-
+    public long getSensorIndex() {
+        return sensorIndex;
+    }
 
     public int getResourceId() {
         return resourceId;
@@ -23,6 +26,10 @@ public class Item {
 
     public String getName() {
         return name;
+    }
+
+    public void setSensorIndex(long sensorIndex) {
+        this.sensorIndex = sensorIndex;
     }
 
     public void setMessage(String message) {
