@@ -1,18 +1,20 @@
-package com.example.smartfactory;
+package com.example.smartfactory.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.smartfactory.Activity.mainActivity.MainActivity;
+import com.example.smartfactory.R;
 import com.example.smartfactory.network.Callretrofit;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 public class LoginActivity extends AppCompatActivity {
@@ -31,8 +33,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Button LoginButton = (Button) findViewById(R.id.btn_login);
-        Button RegisterButton = (Button) findViewById(R.id.btn_register);
+        Button LoginButton = findViewById(R.id.btn_login);
+        Button RegisterButton = findViewById(R.id.btn_register);
         EditText editTextID=findViewById(R.id.et_id);
         EditText editTextPw=findViewById(R.id.et_pass);
         LoginButton.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +55,15 @@ public class LoginActivity extends AppCompatActivity {
                 if (t.response.equals("0")) {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.putExtra("user_id",editTextID.getText().toString());
-                    Callretrofit.post_push_token(FirebaseMessaging.getInstance().getToken().getResult(),t.id);
+                    Task<String> pushToken=FirebaseMessaging.getInstance().getToken();
+                    pushToken.addOnCompleteListener(new OnCompleteListener<String>() {
+                        @Override
+                        public void onComplete(@NonNull Task<String> task) {
+                            System.out.println("LoginActivity.onComplete: "+task.getResult());
+                            Callretrofit.post_push_token(task.getResult(),t.id);
+
+                        }
+                    });
 
                     startActivity(intent);
                 }else{

@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/btn_close"
+        android:id="@+id/drawer_btn_close"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -17,7 +17,7 @@
         android:textColor="#000000" />
 
     <Button
-        android:id="@+id/follower"
+        android:id="@+id/drawerMoveToFollowBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -25,7 +25,10 @@
         android:text="팔로우"
         android:textColor="#000000" />
 
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/followRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>

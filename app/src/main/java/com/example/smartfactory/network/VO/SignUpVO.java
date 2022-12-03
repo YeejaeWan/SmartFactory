@@ -1,8 +1,8 @@
 package com.example.smartfactory.network.VO;
 
 public class SignUpVO {
-       public String ID;
-       public String PW;
+       private String ID;
+       private String PW;
 
     public SignUpVO(String ID, String PW) {
         this.ID = ID;
