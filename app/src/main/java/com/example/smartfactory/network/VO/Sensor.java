@@ -1,7 +1,5 @@
 package com.example.smartfactory.network.VO;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 public class Sensor {
     private long index;

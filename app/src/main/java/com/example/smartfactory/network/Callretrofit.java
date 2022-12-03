@@ -37,7 +37,6 @@ public class Callretrofit {
         RetrofitAPI service= retrofit.create(RetrofitAPI.class);
         Call<String> call = service.post_login_request(new LoginVO(userId,pw,Env.CLIENT));
         String response = null;
-        System.out.println("");;
         try {
             response= call.execute().body();
         }catch (IOException e){
@@ -269,5 +268,33 @@ public class Callretrofit {
                 System.out.println("post_push_token.onFailure");
             }
         });
+    }
+    public static List<String> get_list_of_user_by(String findingUser){
+        Retrofit retrofit = RetrofitClient.getInstance();
+        RetrofitAPI service= retrofit.create(RetrofitAPI.class);
+        Call<List<String>> call = service.get_list_of_user_by(findingUser);
+        List<String> response = null;
+        try {
+
+            response=call.execute().body();
+            for (String s:response) {
+                System.out.println("Callretrofit.get_list_of_user_by:: receive "+s);
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return response;
+    }
+    public static String get_userID_of_by_index(long index){
+        Retrofit retrofit = RetrofitClient.getInstance();
+        RetrofitAPI service= retrofit.create(RetrofitAPI.class);
+        Call<String> call = service.get_userID_of_by_index(index);
+        String response = null;
+        try {
+            response=call.execute().body();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return response;
     }
 }

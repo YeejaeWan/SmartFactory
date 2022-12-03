@@ -23,13 +23,13 @@ public interface RetrofitAPI {
 @GET("sensors/{ID}") Call<Sensor[]> get_all_sensor(@Path("ID") String id);
 
 @GET ("sensors_value/{ID}/resent_one") Call<SensorValue[]>get_sensor_value_resent_one(@Path("ID")String id);
-@GET ("sensors_value/{ID}?from={from}&to={to}") Call<SensorValue[][]>get_sensor_values_period(@Path("ID") String ID, @Path("from") String from, @Path("to") String to);
+@GET ("sensors_value/{ID}") Call<SensorValue[][]>get_sensor_values_period(@Path("ID") String ID, @Query("from") String from, @Query("to") String to);
 @GET ("sensors_value/{ID}/all") Call<SensorValue[][]>get_sensor_value_all(@Path("ID") String ID);
 
 @POST ("followership") Call<String> post_follower(@Body FollowshipVO followshipVO);
 @GET ("followership/{ID}/follow") Call<List<FollowerShipDTO>> get_follow(@Path("ID") String myID);
 @GET ("followership/{ID}/follower") Call<List<FollowerShipDTO>> get_follower(@Path("ID") String myID);
-@PATCH ("followership?enable={enable}") Call<String> patch_follower(@Body Long followerShipIndex,@Path("enable") boolean enable);
+@PATCH ("followership/{index}") Call<String> patch_follower(@Path("index") Long followerShipIndex,@Query("enable") boolean enable);
 @DELETE ("followership/{ID}") Call<String> delete_follower(@Path("ID") Long followerShipIndex);
 
 @POST ("alarm/{ID}") Call<String> post_alarm(@Path("ID") String myID ,@Body AlarmDTO alarmDTO);
@@ -38,5 +38,6 @@ public interface RetrofitAPI {
 @DELETE ("alarm/{index}") Call<String> delete_alarm(@Path("index") Long alarmIndex);
 
 @POST("pushToken/{ID}") Call<String> postPushToken(@Body String pushToken, @Path("ID") String user_id);
-
+@GET("User_list/{partOfID}") Call<List<String>> get_list_of_user_by(@Path("partOfID") String findingUser);
+@GET("user/{index}") Call<String> get_userID_of_by_index(@Path("index")long index);
 }

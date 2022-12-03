@@ -6,46 +6,34 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/userList_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:padding="20dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:weightSum="10">
 
-        <!--프로필 사진-->
-
-
-        <!--이름-->
-
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/UserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="2"
-            android:text="상태1"
-            android:textColor="#000"
-            android:textSize="16sp" />
 
-        <!--상태 메시지-->
-        <TextView
-            android:id="@+id/message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="7"
+            android:layout_weight="9"
             android:maxLines="1"
-            android:text="상태메시지"
+            android:text="userName"
             android:textColor="#444"
-            android:textSize="20dp" />
+            android:textSize="15sp" />
 
         <Button
-            android:id="@+id/addAlarmButton"
+            android:id="@+id/moveToUserBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+
             android:layout_weight="1"
-            android:text="알람추가" />
+            android:text="이동" />
 
     </LinearLayout>
 

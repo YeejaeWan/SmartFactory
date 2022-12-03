@@ -28,7 +28,7 @@ public class SensorValueRecyclerAdapter extends RecyclerView.Adapter<SensorValue
     @Override
     public SensorValueRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         this.parent=parent;
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sensor_value_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -87,7 +87,7 @@ public class SensorValueRecyclerAdapter extends RecyclerView.Adapter<SensorValue
                             //알람 내용이 있으면 수정(patch)요청인데
                             else {//빈칸으로 확인하면 삭제(delete)
                                 if (minSensorValue.equals("") || maxSensorValue.equals("")) {
-                                    Callretrofit.delete_alarm(sensorValueItem.getSensorIndex());
+                                    Callretrofit.delete_alarm(dialog.alarm.getIndex());
                                     System.out.println("ViewHolder.onPositiveClicked: "+ sensorValueItem.getSensorIndex()+"번 센서 알람 삭제");
                                     return;
                                 } else {//값이 있다면 수정(patch)

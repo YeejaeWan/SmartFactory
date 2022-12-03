@@ -6,11 +6,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.smartfactory.Activity.FollowershipSearchActivity;
 import com.example.smartfactory.R;
 import com.example.smartfactory.network.Callretrofit;
 import com.example.smartfactory.network.DTO.SensorValue;
@@ -43,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         initDrawer();
         initmRecycler();
        //------------------------------//
-
 
 
 
@@ -84,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-
         getSensorValueThread.start();
     }
 
@@ -112,14 +112,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //메뉴 닫기 버튼
-        Button btn_close = (Button)findViewById(R.id.btn_close);
+        Button btn_close = (Button)findViewById(R.id.drawer_btn_close);
         btn_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 drawerLayout.closeDrawers();
             }
         });
-
+        Button btn_move= findViewById(R.id.drawerMoveToFollowBtn);
+        btn_move.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(view.getContext(), FollowershipSearchActivity.class);
+                view.getContext().startActivity(intent);
+            }
+        });
 
         drawerLayout.setDrawerListener(listener);
         drawerView.setOnTouchListener(new View.OnTouchListener() {
