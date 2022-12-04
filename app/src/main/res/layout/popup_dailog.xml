@@ -2,10 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
     android:layout_height="250dp"
-    android:orientation="vertical"
     android:layout_gravity="center"
-
-    android:background="@drawable/dialog_style"
+    android:background="#C2C7C8"
+    android:orientation="vertical"
     android:padding="20dp">
 
     <TextView
@@ -15,10 +14,11 @@
         android:text="알람 등록"
         android:textSize="30sp"
         android:textStyle="bold" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/black"/>
+        android:background="@color/black" />
 
     <EditText
         android:id="@+id/minSensorValue"
