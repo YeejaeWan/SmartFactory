@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
                                 String v = sensorValues[j].getValue();
                                 mSensorValueItems.add(new SensorValueItem(idx, n, v));
                             }
-
                         }
                     }
 
@@ -88,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
                         public void run() {
                             mRecyclerAdapter.setFriendList(mSensorValueItems);
                             mRecyclerAdapter.notifyDataSetChanged();
-
                         }
                     });
                 }
