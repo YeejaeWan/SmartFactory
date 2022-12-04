@@ -13,46 +13,45 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public class GetMyrelation extends Thread{
-        public ArrayList<userItem> followTrueList;
-        public ArrayList<userItem> followFalseList;
-        public ArrayList<userItem> followerTrueList;
-        public ArrayList<userItem> followerFalseList;
-        @Override
-        public void run() {
-            List<FollowerShipDTO> followList= Callretrofit.get_follow(MainActivity.userId);
-            List<FollowerShipDTO> followerList= Callretrofit.get_follower(MainActivity.userId);
+public class GetMyrelation extends Thread {
+    private ArrayList<userItem> moveContextUsers;
+    private ArrayList<userItem> cancelContextUsers;
+    private ArrayList<userItem> removeContextUsers;
+    private ArrayList<userItem> requestContextUsers;
 
-            List<FollowerShipDTO> rawFollowTrueList=new ArrayList<>();//무브
-            List<FollowerShipDTO> rawFollowFalseList=new ArrayList<>();//취소
-            List<FollowerShipDTO> rawFollowerTrueList=new ArrayList<>();//삭제
-            List<FollowerShipDTO> rawFollowerFalseList=new ArrayList<>();//요청
-            for(FollowerShipDTO f: followList){
-                if (f.isEnable()){
-                    rawFollowTrueList.add(f);
+    @Override
+    public void run() {
+        List<FollowerShipDTO> followList = Callretrofit.get_follow(MainActivity.userId);
+        List<FollowerShipDTO> followerList = Callretrofit.get_follower(MainActivity.userId);
 
-                }
-                else {
-                    rawFollowFalseList.add(f);
+        List<FollowerShipDTO> rawFollowTrueList = new ArrayList<>();//무브
+        List<FollowerShipDTO> rawFollowFalseList = new ArrayList<>();//취소
+        List<FollowerShipDTO> rawFollowerTrueList = new ArrayList<>();//삭제
+        List<FollowerShipDTO> rawFollowerFalseList = new ArrayList<>();//요청
+        for (FollowerShipDTO f : followList) {
+            if (f.isEnable()) {
+                rawFollowTrueList.add(f);
 
-                }
+            } else {
+                rawFollowFalseList.add(f);
+
             }
-            for(FollowerShipDTO f: followerList){
-                if (f.isEnable()){
-                    rawFollowerTrueList.add(f);
-                    System.out.println("GetMyrelation.run:: f.isEnabled so ->"+f.getIndex()+" "+ f.getFollowerUserIndex()+ " follows -> "+ f.getFollowUserIndex() );
-                }
-                else {
-                    rawFollowerFalseList.add(f);
-
-                }
-            }
-            this.followTrueList=initData(rawFollowTrueList, Context.move);
-            this.followFalseList=initData(rawFollowFalseList,Context.requested);
-            this.followerTrueList=initData(rawFollowerTrueList,Context.delete);
-            this.followerFalseList=initData(rawFollowerFalseList,Context.request);
-
         }
+        for (FollowerShipDTO f : followerList) {
+            if (f.isEnable()) {
+                rawFollowerTrueList.add(f);
+                System.out.println("GetMyrelation.run:: f.isEnabled so ->" + f.getIndex() + " " + f.getFollowerUserIndex() + " follows -> " + f.getFollowUserIndex());
+            } else {
+                rawFollowerFalseList.add(f);
+
+            }
+        }
+        this.moveContextUsers = initData(rawFollowTrueList, Context.move);
+        this.cancelContextUsers = initData(rawFollowFalseList, Context.requested);
+        this.removeContextUsers = initData(rawFollowerTrueList, Context.delete);
+        this.requestContextUsers = initData(rawFollowerFalseList, Context.request);
+
+    }
     private ArrayList<userItem> initData(List<FollowerShipDTO>list,String context){
         ArrayList<userItem> resultArray=new ArrayList<>();
         BlockingQueue<Runnable> blockingQueue= new ArrayBlockingQueue<Runnable>(10);
@@ -80,5 +79,33 @@ public class GetMyrelation extends Thread{
             }
         }
         return resultArray;
+    }
+
+    public ArrayList<userItem> getMoveContextUsers() {
+        try {
+            this.join();
+        }catch (InterruptedException e){e.printStackTrace();}
+            return moveContextUsers;
+    }
+
+    public ArrayList<userItem> getCancelContextUsers() {
+        try {
+            this.join();
+        }catch (InterruptedException e){e.printStackTrace();}
+        return cancelContextUsers;
+    }
+
+    public ArrayList<userItem> getRemoveContextUsers() {
+        try {
+            this.join();
+        }catch (InterruptedException e){e.printStackTrace();}
+        return removeContextUsers;
+    }
+
+    public ArrayList<userItem> getRequestContextUsers() {
+        try {
+            this.join();
+        }catch (InterruptedException e){e.printStackTrace();}
+        return requestContextUsers;
     }
 }

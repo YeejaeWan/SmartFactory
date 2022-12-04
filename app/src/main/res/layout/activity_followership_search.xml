@@ -35,7 +35,7 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:text="Name" />
+                android:hint="search user id" />
 
             <Button
                 android:id="@+id/findBtn"

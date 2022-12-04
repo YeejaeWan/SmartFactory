@@ -58,6 +58,7 @@ public class CustomViewAdapter extends RecyclerView.Adapter<CustomViewAdapter.Cu
             }
         });
         holder.userName.setText(arrayList.get(pos).getUserName());
+        System.out.println("CustomViewAdapter.onBindViewHolder : userName="+arrayList.get(pos).getUserName()+arrayList.get(pos).getContext());
         switch (arrayList.get(pos).getContext()){
             case Context.move:
                 holder.moveButton.setText(arrayList.get(pos).getContext());
@@ -65,7 +66,21 @@ public class CustomViewAdapter extends RecyclerView.Adapter<CustomViewAdapter.Cu
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(view.getContext(), OtherUserActivity.class);
+                        intent.putExtra("followerShipIndex",arrayList.get(pos).getFollowershipIndex());
+                        intent.putExtra("userName",arrayList.get(pos).getUserName());
+                        intent.putExtra("context",arrayList.get(pos).getContext());
+
                         view.getContext().startActivity(intent);
+                    }
+                });
+                break;
+            case Context.requested:
+                holder.moveButton.setText(arrayList.get(pos).getContext());
+                holder.moveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Callretrofit.delete_follower(arrayList.get(pos).getFollowershipIndex());
+                        onBindViewHolder(holder,pos);
                     }
                 });
                 break;

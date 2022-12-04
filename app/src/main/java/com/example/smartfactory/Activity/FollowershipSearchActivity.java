@@ -44,6 +44,7 @@ public class FollowershipSearchActivity extends AppCompatActivity {
         List<userItem> foundlist_found_false;
         List<userItem> foundlist_found_just;
         List<String> listOfuser;
+
         List<String> followTrueList;
         List<String> followFalseList;
         List<userItem>trueFollow;
@@ -54,14 +55,15 @@ public class FollowershipSearchActivity extends AppCompatActivity {
             foundlist_found_true=new ArrayList<>();
             foundlist_found_false=new ArrayList<>();
             foundlist_found_just=new ArrayList<>();
+            trueFollow=followTrueList;
+            falseFollow=followFalseList;
+
             for (userItem s:followTrueList) {
                 this.followTrueList.add(s.getUserName());
             }
             for (userItem s:followFalseList) {
                 this.followFalseList.add(s.getUserName());
             }
-            trueFollow=followTrueList;
-            falseFollow=followFalseList;
         }
         @Override
         public void run() {
@@ -75,13 +77,17 @@ public class FollowershipSearchActivity extends AppCompatActivity {
                     break;
                 }
             }
+            int offset1=0;
+            int offset2=0;
             for (int i=0; i<listOfuser.size();i++){
                 String id=listOfuser.get(i);
                 if(followTrueList.contains(id)){
-                    foundlist_found_true.add(trueFollow.get(i));
+                    foundlist_found_true.add(trueFollow.get(offset1));
+                    offset1++;
                 }
                 else if(followFalseList.contains(id)){
-                    foundlist_found_false.add(falseFollow.get(i));
+                    foundlist_found_false.add(falseFollow.get(offset2));
+                    offset2++;
                 }else{
                     foundlist_found_just.add(new userItem(-1,id, Context.follow));
                 }
@@ -134,10 +140,10 @@ public class FollowershipSearchActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         followerArrayList=new ArrayList<>();
-                        for (userItem u:getMyrelation.followerFalseList) {
+                        for (userItem u:getMyrelation.getRequestContextUsers()) {
                             followerArrayList.add(u);
                         }
-                        for (userItem u:getMyrelation.followerTrueList) {
+                        for (userItem u:getMyrelation.getRemoveContextUsers()) {
                             followerArrayList.add(u);
                         }
                         followerAdapter.setFriendList(followerArrayList);
@@ -145,7 +151,7 @@ public class FollowershipSearchActivity extends AppCompatActivity {
                         findUserButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                GetListOfUserTheread getListOfUserTheread = new GetListOfUserTheread( getMyrelation.followTrueList, getMyrelation.followFalseList);
+                                GetListOfUserTheread getListOfUserTheread = new GetListOfUserTheread( getMyrelation.getMoveContextUsers(), getMyrelation.getCancelContextUsers());
                                 getListOfUserTheread.start();
                             }
                         });
