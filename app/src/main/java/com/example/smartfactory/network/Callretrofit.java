@@ -44,19 +44,7 @@ public class Callretrofit {
         }
         return response;
     }
-    public static String post_signUp_request(String userId,String pw) {
-        Retrofit retrofit = RetrofitClient.getInstance();
-        RetrofitAPI service= retrofit.create(RetrofitAPI.class);
-        Call<String> call = service.post_signUp_request(new SignUpVO(userId,pw));
-        String response = null;
-        try {
-            response= call.execute().body();
 
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-        return response;
-    }
     public static Sensor[] get_all_sensor(String userId){
         Retrofit retrofit = RetrofitClient.getInstance();
         RetrofitAPI service= retrofit.create(RetrofitAPI.class);
@@ -69,8 +57,6 @@ public class Callretrofit {
         }
         return response;
     }
-
-
 
     public static SensorValue[] get_sensor_value_resent_one(String userId){
         Retrofit retrofit = RetrofitClient.getInstance();
