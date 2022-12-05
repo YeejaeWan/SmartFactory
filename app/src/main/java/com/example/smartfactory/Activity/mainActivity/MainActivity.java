@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        followsArray=new ArrayList<>();
                         followsArray=getMyrelation.getMoveContextUsers();
                         followAdapter.setFriendList(followsArray);
                     }

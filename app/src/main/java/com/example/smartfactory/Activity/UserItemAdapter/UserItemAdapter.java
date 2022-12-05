@@ -48,80 +48,121 @@ public class UserItemAdapter extends RecyclerView.Adapter<UserItemAdapter.Custom
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {//실제 추가될 떄의 생명주기
-        int pos=holder.getAbsoluteAdapterPosition();
+        int pos=holder.getLayoutPosition();
         holder.itemView.setTag(pos);
-        System.out.println("CustomViewAdapter.onBindViewHolder");
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        Button accept = new Button(holder.itemView.getContext());
+        Button deny = new Button(holder.itemView.getContext());
+        Button delete = new Button(holder.itemView.getContext());
+        Button move = new Button(holder.itemView.getContext());
+        Button follow = new Button(holder.itemView.getContext());
+        Button requested = new Button(holder.itemView.getContext());
+        accept.setText("수락");
+        deny.setText("거절");
+        delete.setText("삭제");
+        move.setText("이동");
+        follow.setText("팔로우");
+        requested.setText("취소");
 
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Callretrofit.patch_follower(arrayList.get(pos).getFollowershipIndex(),true);
+                holder.linearLayout.removeView(holder.button1);
+                holder.linearLayout.removeView(holder.button2);
+                holder.button2=null;
+                holder.button1 =delete;
+                holder.linearLayout.addView(holder.button1);
+
+            }
+        });
+        deny.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Callretrofit.delete_follower(arrayList.get(pos).getFollowershipIndex());
+                arrayList.remove(pos);
+                notifyItemRemoved(pos);
+                notifyDataSetChanged();
+            }
+        });
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Callretrofit.delete_follower(arrayList.get(pos).getFollowershipIndex());
+                arrayList.remove(pos);
+                notifyItemRemoved(pos);
+                notifyDataSetChanged();
+            }
+        });
+        move.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), OtherUserActivity.class);
+                intent.putExtra("followerShipIndex",arrayList.get(pos).getFollowershipIndex());
+                intent.putExtra("userName",arrayList.get(pos).getUserName());
+                intent.putExtra("context",arrayList.get(pos).getContext());
+
+                view.getContext().startActivity(intent);
+            }
+        });
+        follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Callretrofit.post_follower(new FollowshipVO(MainActivity.userId,arrayList.get(pos).getUserName()));
+                holder.linearLayout.removeView(holder.button1);
+                holder.button1 =requested;
+                holder.linearLayout.addView(holder.button1);
+
+            }
+        });
+        requested.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Callretrofit.delete_follower(arrayList.get(pos).getFollowershipIndex());
+                holder.linearLayout.removeView(holder.button1);
+                holder.button1 =follow;
+                holder.linearLayout.addView(holder.button1);
             }
         });
         holder.userName.setText(arrayList.get(pos).getUserName());
         System.out.println("CustomViewAdapter.onBindViewHolder : userName="+arrayList.get(pos).getUserName()+arrayList.get(pos).getContext());
-        switch (arrayList.get(pos).getContext()){
-            case Context.move:
-                holder.moveButton.setText(arrayList.get(pos).getContext());
-                holder.moveButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(view.getContext(), OtherUserActivity.class);
-                        intent.putExtra("followerShipIndex",arrayList.get(pos).getFollowershipIndex());
-                        intent.putExtra("userName",arrayList.get(pos).getUserName());
-                        intent.putExtra("context",arrayList.get(pos).getContext());
-
-                        view.getContext().startActivity(intent);
-                    }
-                });
-                break;
-            case Context.requested:
-                holder.moveButton.setText(arrayList.get(pos).getContext());
-                holder.moveButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Callretrofit.delete_follower(arrayList.get(pos).getFollowershipIndex());
-                        onBindViewHolder(holder,pos);
-                    }
-                });
-                break;
-            case Context.follow:
-                holder.moveButton.setText(arrayList.get(pos).getContext());
-                holder.moveButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Callretrofit.post_follower(new FollowshipVO(MainActivity.userId,arrayList.get(pos).getUserName()));
-                    }
-                });
-                break;
-            case Context.delete:
-                holder.moveButton.setText(arrayList.get(pos).getContext());
-                holder.moveButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Callretrofit.delete_follower(arrayList.get(pos).getFollowershipIndex());
-                    }
-                });
-                break;
-            case Context.request:
-                holder.moveButton2=new Button(parentContext);
-                holder.moveButton.setText("수락");
-                holder.moveButton2.setText("거절");
-                holder.moveButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Callretrofit.patch_follower(arrayList.get(pos).getFollowershipIndex(),true);
-                    }
-                });
-                holder.moveButton2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Callretrofit.delete_follower(arrayList.get(pos).getFollowershipIndex());
-                    }
-                });
-                holder.linearLayout.addView(holder.moveButton2);
-                break;
+        if (arrayList.get(pos).getContext().equals(Context.request)) {
+            holder.linearLayout.removeView(holder.button1);
+            holder.linearLayout.removeView(holder.button2);
+            holder.button1 =accept;
+            holder.button2 =deny;
+            holder.linearLayout.addView(holder.button1);
+            holder.linearLayout.addView(holder.button2);
+        }
+        else if (arrayList.get(pos).getContext().equals(Context.delete)){
+            holder.linearLayout.removeView(holder.button1);
+            holder.linearLayout.removeView(holder.button2);
+            holder.button1 =delete;
+            holder.linearLayout.addView(holder.button1);
+        }
+        else if (arrayList.get(pos).getContext().equals(Context.move)){
+            holder.linearLayout.removeView(holder.button1);
+            holder.linearLayout.removeView(holder.button2);
+            holder.button1 =move;
+            holder.linearLayout.addView(holder.button1);
+            holder.linearLayout.removeView(holder.button2);
 
         }
+        else if (arrayList.get(pos).getContext().equals(Context.requested)){
+            holder.linearLayout.removeView(holder.button1);
+            holder.linearLayout.removeView(holder.button2);
+            holder.button1 =requested;
+            holder.linearLayout.addView(holder.button1);
+
+        }
+        else {
+            holder.linearLayout.removeView(holder.button1);
+            holder.linearLayout.removeView(holder.button2);
+            holder.button1 =follow;
+            holder.linearLayout.addView(holder.button1);
+
+
+        }
+
 
     }
 
@@ -133,8 +174,8 @@ public class UserItemAdapter extends RecyclerView.Adapter<UserItemAdapter.Custom
     public class CustomViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout linearLayout;
         protected TextView userName;
-        protected Button moveButton;
-        protected Button moveButton2=null;
+        protected Button button1;
+        protected Button button2;
 
         protected boolean enabled;
         public CustomViewHolder(@NonNull View itemView) {
@@ -142,8 +183,7 @@ public class UserItemAdapter extends RecyclerView.Adapter<UserItemAdapter.Custom
             System.out.println("CustomViewHolder.CustomViewHolder");
             this.linearLayout=itemView.findViewById(R.id.userList_linearLayout);
             this.userName = itemView.findViewById(R.id.UserName);
-            this.moveButton=itemView.findViewById(R.id.moveToUserBtn);
-
         }
+
     }
 }

@@ -28,14 +28,6 @@
             android:textColor="#444"
             android:textSize="15sp" />
 
-        <Button
-            android:id="@+id/moveToUserBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_weight="1"
-            android:text="이동" />
-
     </LinearLayout>
 
     <!--구분선-->
