@@ -13,31 +13,29 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.smartfactory.Activity.CustomAdapter.Context;
-import com.example.smartfactory.Activity.CustomAdapter.CustomViewAdapter;
-import com.example.smartfactory.Activity.CustomAdapter.userItem;
-import com.example.smartfactory.Activity.mainActivity.SensorValueItem;
-import com.example.smartfactory.Activity.mainActivity.SensorValueRecyclerAdapter;
+import com.example.smartfactory.Activity.UserItemAdapter.Context;
+import com.example.smartfactory.Activity.UserItemAdapter.UserItemAdapter;
+import com.example.smartfactory.Activity.UserItemAdapter.UserItem;
+import com.example.smartfactory.Activity.SensorValueAdapter.SensorValueItem;
+import com.example.smartfactory.Activity.SensorValueAdapter.SensorValueAdapter;
 import com.example.smartfactory.R;
 import com.example.smartfactory.network.Callretrofit;
 import com.example.smartfactory.network.DTO.SensorValue;
 import com.example.smartfactory.network.GetMyrelation;
 import com.example.smartfactory.network.VO.Sensor;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 public class OtherUserActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
-    private SensorValueRecyclerAdapter mRecyclerAdapter;
+    private SensorValueAdapter mRecyclerAdapter;
     private ArrayList<SensorValueItem> mSensorValueItems;
 
     private DrawerLayout drawerLayout;
     private View drawerView;
 
-    private CustomViewAdapter followAdapter;
-    private ArrayList<userItem> followsArray;
+    private UserItemAdapter followAdapter;
+    private ArrayList<UserItem> followsArray;
     private RecyclerView followsRecyclerView;
     Button btn_open;
     String userId;
@@ -137,7 +135,7 @@ public class OtherUserActivity extends AppCompatActivity {
     }
     private void initmRecycler() {
         /* initiate adapter */
-        mRecyclerAdapter = new SensorValueRecyclerAdapter();
+        mRecyclerAdapter = new SensorValueAdapter();
         /* initiate recyclerview */
         mRecyclerView.setAdapter(mRecyclerAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL,false));
@@ -147,13 +145,13 @@ public class OtherUserActivity extends AppCompatActivity {
         }
         mRecyclerAdapter.setFriendList(mSensorValueItems);
 
-        followAdapter=new CustomViewAdapter(followsArray);
+        followAdapter=new UserItemAdapter(followsArray);
         followsRecyclerView.setAdapter(followAdapter);
         followsRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL,false));
         followsArray=new ArrayList<>();
 
         for(int i=1;i<=10;i++){
-            followsArray.add(new userItem(i,"상태"+i, Context.move));
+            followsArray.add(new UserItem(i,"상태"+i, Context.move));
         }
         followAdapter.setFriendList(followsArray);
     }

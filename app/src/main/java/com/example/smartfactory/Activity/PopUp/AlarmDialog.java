@@ -1,4 +1,4 @@
-package com.example.smartfactory.Activity.mainActivity.PopUp;
+package com.example.smartfactory.Activity.PopUp;
 
 import androidx.annotation.NonNull;
 
@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.smartfactory.Activity.mainActivity.MainActivity;
-import com.example.smartfactory.Activity.mainActivity.SensorValueItem;
+import com.example.smartfactory.Activity.SensorValueAdapter.SensorValueItem;
 import com.example.smartfactory.R;
 import com.example.smartfactory.network.Callretrofit;
 import com.example.smartfactory.network.DTO.AlarmDTO;

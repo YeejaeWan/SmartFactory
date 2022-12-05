@@ -1,4 +1,4 @@
-package com.example.smartfactory.Activity.mainActivity;
+package com.example.smartfactory.Activity.SensorValueAdapter;
 
 public class SensorValueItem {
     long sensorIndex;

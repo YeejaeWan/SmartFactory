@@ -1,15 +1,15 @@
-package com.example.smartfactory.Activity.CustomAdapter;
+package com.example.smartfactory.Activity.UserItemAdapter;
 
-public class userItem{
+public class UserItem {
     private long followershipIndex;
     private String userName;
     private String context;
 
-    public userItem(long followershipIndex,String userName, String context) {
+    public UserItem(long followershipIndex, String userName, String context) {
         this.followershipIndex=followershipIndex;
         this.userName = userName;
         this.context = context;
-    }public userItem(long followershipIndex,String userName) {
+    }public UserItem(long followershipIndex, String userName) {
         this.followershipIndex=followershipIndex;
         this.userName = userName;
     }

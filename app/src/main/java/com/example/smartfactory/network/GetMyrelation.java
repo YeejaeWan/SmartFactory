@@ -1,8 +1,8 @@
 package com.example.smartfactory.network;
 
-import com.example.smartfactory.Activity.CustomAdapter.Context;
+import com.example.smartfactory.Activity.UserItemAdapter.Context;
 import com.example.smartfactory.Activity.mainActivity.MainActivity;
-import com.example.smartfactory.Activity.CustomAdapter.userItem;
+import com.example.smartfactory.Activity.UserItemAdapter.UserItem;
 import com.example.smartfactory.network.DTO.FollowerShipDTO;
 
 import java.util.ArrayList;
@@ -14,10 +14,10 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public class GetMyrelation extends Thread {
-    private ArrayList<userItem> moveContextUsers;
-    private ArrayList<userItem> cancelContextUsers;
-    private ArrayList<userItem> removeContextUsers;
-    private ArrayList<userItem> requestContextUsers;
+    private ArrayList<UserItem> moveContextUsers;
+    private ArrayList<UserItem> cancelContextUsers;
+    private ArrayList<UserItem> removeContextUsers;
+    private ArrayList<UserItem> requestContextUsers;
 
     @Override
     public void run() {
@@ -52,8 +52,8 @@ public class GetMyrelation extends Thread {
         this.requestContextUsers = initData(rawFollowerFalseList, Context.request);
 
     }
-    private ArrayList<userItem> initData(List<FollowerShipDTO>list,String context){
-        ArrayList<userItem> resultArray=new ArrayList<>();
+    private ArrayList<UserItem> initData(List<FollowerShipDTO>list, String context){
+        ArrayList<UserItem> resultArray=new ArrayList<>();
         BlockingQueue<Runnable> blockingQueue= new ArrayBlockingQueue<Runnable>(10);
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(4,100,30, TimeUnit.SECONDS,blockingQueue);
         List<Future<String>> jobRunnableFuture= new ArrayList<>();
@@ -73,7 +73,7 @@ public class GetMyrelation extends Thread {
         for (int i = 0; i < list.size(); i++) {
             Future<String> result=jobRunnableFuture.get(i);
             try {
-                resultArray.add(new userItem(list.get(i).getIndex(), result.get(), context));
+                resultArray.add(new UserItem(list.get(i).getIndex(), result.get(), context));
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -81,28 +81,28 @@ public class GetMyrelation extends Thread {
         return resultArray;
     }
 
-    public ArrayList<userItem> getMoveContextUsers() {
+    public ArrayList<UserItem> getMoveContextUsers() {
         try {
             this.join();
         }catch (InterruptedException e){e.printStackTrace();}
             return moveContextUsers;
     }
 
-    public ArrayList<userItem> getCancelContextUsers() {
+    public ArrayList<UserItem> getCancelContextUsers() {
         try {
             this.join();
         }catch (InterruptedException e){e.printStackTrace();}
         return cancelContextUsers;
     }
 
-    public ArrayList<userItem> getRemoveContextUsers() {
+    public ArrayList<UserItem> getRemoveContextUsers() {
         try {
             this.join();
         }catch (InterruptedException e){e.printStackTrace();}
         return removeContextUsers;
     }
 
-    public ArrayList<userItem> getRequestContextUsers() {
+    public ArrayList<UserItem> getRequestContextUsers() {
         try {
             this.join();
         }catch (InterruptedException e){e.printStackTrace();}

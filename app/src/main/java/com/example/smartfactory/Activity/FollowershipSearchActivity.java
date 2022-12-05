@@ -9,12 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.smartfactory.Activity.CustomAdapter.Context;
-import com.example.smartfactory.Activity.CustomAdapter.CustomViewAdapter;
+import com.example.smartfactory.Activity.UserItemAdapter.Context;
+import com.example.smartfactory.Activity.UserItemAdapter.UserItemAdapter;
 import com.example.smartfactory.Activity.mainActivity.MainActivity;
 import com.example.smartfactory.R;
 import com.example.smartfactory.network.Callretrofit;
-import com.example.smartfactory.Activity.CustomAdapter.userItem;
+import com.example.smartfactory.Activity.UserItemAdapter.UserItem;
 import com.example.smartfactory.network.GetMyrelation;
 
 import java.util.ArrayList;
@@ -24,13 +24,13 @@ public class FollowershipSearchActivity extends AppCompatActivity {
     EditText inputUserId;
     Button findUserButton;
 
-    CustomViewAdapter foundUserAdapter;
-    ArrayList<userItem> foundArraylist;// 이동이나, 취소, 팔로우 상태를 가짐
+    UserItemAdapter foundUserAdapter;
+    ArrayList<UserItem> foundArraylist;// 이동이나, 취소, 팔로우 상태를 가짐
     RecyclerView foundRecyclerView;     //이동:getFollow 리스트에 있고 enable인 경우
                                         //취소:getFollow 리스트에 있고 disable
 
-    CustomViewAdapter followerAdapter;
-    ArrayList<userItem> followerArrayList; // 삭제나 요청 상태를 가짐
+    UserItemAdapter followerAdapter;
+    ArrayList<UserItem> followerArrayList; // 삭제나 요청 상태를 가짐
     RecyclerView followerRecyclerView;//삭제: getFollower 에 있고 enalble인 경우.
                                        //요청 getFollower 에 있고 disable인경우
 
@@ -40,16 +40,16 @@ public class FollowershipSearchActivity extends AppCompatActivity {
 
 
     class GetListOfUserTheread extends Thread{
-        List<userItem> foundlist_found_true;
-        List<userItem> foundlist_found_false;
-        List<userItem> foundlist_found_just;
+        List<UserItem> foundlist_found_true;
+        List<UserItem> foundlist_found_false;
+        List<UserItem> foundlist_found_just;
         List<String> listOfuser;
 
         List<String> followTrueList;
         List<String> followFalseList;
-        List<userItem>trueFollow;
-        List<userItem>falseFollow;
-        GetListOfUserTheread(ArrayList<userItem> followTrueList,ArrayList<userItem> followFalseList){
+        List<UserItem>trueFollow;
+        List<UserItem>falseFollow;
+        GetListOfUserTheread(ArrayList<UserItem> followTrueList, ArrayList<UserItem> followFalseList){
             this.followTrueList=new ArrayList<>();
             this.followFalseList=new ArrayList<>();
             foundlist_found_true=new ArrayList<>();
@@ -58,10 +58,10 @@ public class FollowershipSearchActivity extends AppCompatActivity {
             trueFollow=followTrueList;
             falseFollow=followFalseList;
 
-            for (userItem s:followTrueList) {
+            for (UserItem s:followTrueList) {
                 this.followTrueList.add(s.getUserName());
             }
-            for (userItem s:followFalseList) {
+            for (UserItem s:followFalseList) {
                 this.followFalseList.add(s.getUserName());
             }
         }
@@ -89,23 +89,23 @@ public class FollowershipSearchActivity extends AppCompatActivity {
                     foundlist_found_false.add(falseFollow.get(offset2));
                     offset2++;
                 }else{
-                    foundlist_found_just.add(new userItem(-1,id, Context.follow));
+                    foundlist_found_just.add(new UserItem(-1,id, Context.follow));
                 }
             }
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     foundArraylist=new ArrayList<>();
-                    for (userItem u:foundlist_found_true) {
+                    for (UserItem u:foundlist_found_true) {
                         foundArraylist.add(u);
                     }
-                    for (userItem u:foundlist_found_false) {
+                    for (UserItem u:foundlist_found_false) {
                         foundArraylist.add(u);
                     }
-                    for (userItem u:foundlist_found_just) {
+                    for (UserItem u:foundlist_found_just) {
                         foundArraylist.add(u);
                     }
-                    for (userItem u:foundArraylist) {
+                    for (UserItem u:foundArraylist) {
                         System.out.println("GetListOfUserTheread.run:: processed "+u.getUserName());
                     }
                     foundUserAdapter.setFriendList(foundArraylist);
@@ -140,10 +140,10 @@ public class FollowershipSearchActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         followerArrayList=new ArrayList<>();
-                        for (userItem u:getMyrelation.getRequestContextUsers()) {
+                        for (UserItem u:getMyrelation.getRequestContextUsers()) {
                             followerArrayList.add(u);
                         }
-                        for (userItem u:getMyrelation.getRemoveContextUsers()) {
+                        for (UserItem u:getMyrelation.getRemoveContextUsers()) {
                             followerArrayList.add(u);
                         }
                         followerAdapter.setFriendList(followerArrayList);
@@ -167,7 +167,7 @@ public class FollowershipSearchActivity extends AppCompatActivity {
 
     }
     private void initRecycler() {
-        foundUserAdapter = new CustomViewAdapter(foundArraylist);
+        foundUserAdapter = new UserItemAdapter(foundArraylist);
         foundRecyclerView.setAdapter(foundUserAdapter);
         foundRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL,false));
         foundArraylist = new ArrayList<>();
@@ -176,7 +176,7 @@ public class FollowershipSearchActivity extends AppCompatActivity {
         }*/
         foundUserAdapter.setFriendList(foundArraylist);
 
-        followerAdapter = new CustomViewAdapter(followerArrayList);
+        followerAdapter = new UserItemAdapter(followerArrayList);
         followerRecyclerView.setAdapter(followerAdapter);
         followerRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL,false));
         followerArrayList = new ArrayList<>();

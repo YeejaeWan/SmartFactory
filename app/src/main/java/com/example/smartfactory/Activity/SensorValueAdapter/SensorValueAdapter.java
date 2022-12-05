@@ -1,4 +1,4 @@
-package com.example.smartfactory.Activity.mainActivity;
+package com.example.smartfactory.Activity.SensorValueAdapter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -11,8 +11,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.smartfactory.Activity.mainActivity.PopUp.AlarmDialog;
-import com.example.smartfactory.Activity.mainActivity.PopUp.DialogListener;
+import com.example.smartfactory.Activity.mainActivity.MainActivity;
+import com.example.smartfactory.Activity.PopUp.AlarmDialog;
+import com.example.smartfactory.Activity.PopUp.DialogListener;
 import com.example.smartfactory.R;
 import com.example.smartfactory.network.Callretrofit;
 import com.example.smartfactory.network.DTO.AlarmDTO;
@@ -20,20 +21,20 @@ import com.example.smartfactory.network.DTO.AlarmDTO;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class SensorValueRecyclerAdapter extends RecyclerView.Adapter<SensorValueRecyclerAdapter.ViewHolder> {
+public class SensorValueAdapter extends RecyclerView.Adapter<SensorValueAdapter.ViewHolder> {
 
     private ArrayList<SensorValueItem> mList;
     ViewGroup parent;
     @NonNull
     @Override
-    public SensorValueRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SensorValueAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         this.parent=parent;
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sensor_value_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SensorValueRecyclerAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SensorValueAdapter.ViewHolder holder, int position) {
         mList.get(position).setResourceId(position);
         holder.onBind(mList.get(position));
     }

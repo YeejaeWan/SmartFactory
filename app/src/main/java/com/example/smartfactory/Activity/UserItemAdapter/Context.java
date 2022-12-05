@@ -1,4 +1,4 @@
-package com.example.smartfactory.Activity.CustomAdapter;
+package com.example.smartfactory.Activity.UserItemAdapter;
 
 public class Context{
     public static final String requested="취소";//팔로우 되어있는 상태(disabled인)

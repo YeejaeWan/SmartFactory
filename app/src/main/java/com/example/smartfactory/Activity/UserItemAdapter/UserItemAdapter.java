@@ -1,4 +1,4 @@
-package com.example.smartfactory.Activity.CustomAdapter;
+package com.example.smartfactory.Activity.UserItemAdapter;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -23,15 +23,15 @@ import java.util.ArrayList;
 
 
 
-public class CustomViewAdapter extends RecyclerView.Adapter<CustomViewAdapter.CustomViewHolder>{
-    private ArrayList<userItem> arrayList;
+public class UserItemAdapter extends RecyclerView.Adapter<UserItemAdapter.CustomViewHolder>{
+    private ArrayList<UserItem> arrayList;
     android.content.Context parentContext;
-    public CustomViewAdapter(ArrayList<userItem> arrayList) {
+    public UserItemAdapter(ArrayList<UserItem> arrayList) {
         System.out.println("CustomViewAdapter.CustomViewAdapter on init");
         this.arrayList = arrayList;
     }
 
-    public void setFriendList(ArrayList<userItem> list){
+    public void setFriendList(ArrayList<UserItem> list){
         this.arrayList = list;
         notifyDataSetChanged();
     }
