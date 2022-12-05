@@ -1,7 +1,6 @@
 package com.example.smartfactory.network;
 
 
-import android.util.Log;
 
 import com.example.smartfactory.network.DTO.AlarmDTO;
 import com.example.smartfactory.network.DTO.FollowerShipDTO;
@@ -9,14 +8,11 @@ import com.example.smartfactory.network.DTO.SensorValue;
 import com.example.smartfactory.network.VO.FollowshipVO;
 import com.example.smartfactory.network.VO.LoginVO;
 import com.example.smartfactory.network.VO.Sensor;
-import com.example.smartfactory.network.VO.SignUpVO;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.http.GET;
-import retrofit2.http.Path;
 
 import java.io.IOException;
 import java.util.List;
