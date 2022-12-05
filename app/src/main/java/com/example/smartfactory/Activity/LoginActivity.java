@@ -34,7 +34,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Button LoginButton = findViewById(R.id.btn_login);
-        Button RegisterButton = findViewById(R.id.btn_register);
         EditText editTextID=findViewById(R.id.et_id);
         EditText editTextPw=findViewById(R.id.et_pass);
         LoginButton.setOnClickListener(new View.OnClickListener() {
@@ -72,14 +71,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        RegisterButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
 
     }
 }

@@ -14,10 +14,10 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public class GetMyrelation extends Thread {
-    private ArrayList<UserItem> moveContextUsers;
-    private ArrayList<UserItem> cancelContextUsers;
-    private ArrayList<UserItem> removeContextUsers;
-    private ArrayList<UserItem> requestContextUsers;
+    private static ArrayList<UserItem> moveContextUsers;
+    private static ArrayList<UserItem> cancelContextUsers;
+    private static ArrayList<UserItem> removeContextUsers;
+    private static ArrayList<UserItem> requestContextUsers;
 
     @Override
     public void run() {
